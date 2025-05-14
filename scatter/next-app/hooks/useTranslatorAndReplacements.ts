@@ -112,20 +112,15 @@ const useTranslatorAndReplacements = (
     (txt?: string) => {
       if (!txt) return txt;
 
-      // force Japanese UI
-      const result = JapaneseUI[txt];
-      if (!result) return txt;
-      return result;
-
-      // if (langIndex === 0) return replaceAll(txt);
-      // const result = translations[txt]?.[langIndex - 1];
-      // if (!result) {
-      //   if (!missing[txt]) {
-      //     missing[txt] = true;
-      //     console.log(`Missing translation for "${txt}"`);
-      //   }
-      // }
-      // return fixLocalLang(replaceAll(result || txt));
+      if (langIndex === 0) return replaceAll(txt);
+      const result = translations[txt]?.[langIndex - 1];
+      if (!result) {
+        if (!missing[txt]) {
+          missing[txt] = true;
+          console.log(`Missing translation for "${txt}"`);
+        }
+      }
+      return fixLocalLang(replaceAll(result || txt));
     },
     [langIndex, replaceAll]
   );
